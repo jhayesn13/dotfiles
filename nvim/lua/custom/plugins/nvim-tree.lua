@@ -1,0 +1,98 @@
+return {
+  --   'nvim-tree/nvim-tree.lua',
+  --   dependencies = { 'nvim-tree/nvim-web-devicons' },
+  --   config = function()
+  --     local function get_git_root()
+  --       local out = vim.fn.systemlist('git rev-parse --show-toplevel')
+  --       if vim.v.shell_error == 0 and out[1] then
+  --         return out[1]
+  --       end
+  --       return vim.fn.getcwd()
+  --     end
+  --
+  --     local tree_width = math.floor(vim.o.columns / 5)
+  --
+  --     require('nvim-tree').setup({
+  --       hijack_netrw = true,
+  --       root_dirs = { get_git_root() },
+  --       prefer_startup_root = true,
+  --       sync_root_with_cwd = false,
+  --       view = {
+  --         width = tree_width,
+  --         side = 'left',
+  --       },
+  --       actions = {
+  --         open_file = {
+  --           window_picker = { enable = false },
+  --         },
+  --       },
+  --       on_attach = function(bufnr)
+  --         local api = require('nvim-tree.api')
+  --
+  --         local function opts(desc)
+  --           return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  --         end
+  --
+  --         api.map.on_attach.default(bufnr)
+  --
+  --         local function open_vsplit()
+  --           local node = api.tree.get_node_under_cursor()
+  --           if not node then
+  --             return
+  --           end
+  --           if node.type == 'directory' then
+  --             api.node.open.edit()
+  --             return
+  --           end
+  --           api.node.open.vertical()
+  --           local new_width = math.floor(vim.o.columns / 5)
+  --           api.tree.resize({ absolute = new_width })
+  --         end
+  --
+  --         local function get_line_depth(line)
+  --           local text = vim.api.nvim_buf_get_lines(0, line - 1, line, false)[1]
+  --           if not text then
+  --             return nil
+  --           end
+  --           return #text - #text:gsub('^%s+', '')
+  --         end
+  --
+  --         local function jump_to_same_level_directory(direction)
+  --           local start_line = vim.api.nvim_win_get_cursor(0)[1]
+  --           local start_depth = get_line_depth(start_line)
+  --           if not start_depth then
+  --             return
+  --           end
+  --           local line = start_line
+  --           local total = vim.api.nvim_buf_line_count(0)
+  --           while true do
+  --             line = line + direction
+  --             if line < 1 or line > total then
+  --               return
+  --             end
+  --             local depth = get_line_depth(line)
+  --             if not depth then
+  --               goto continue
+  --             end
+  --             if depth < start_depth then
+  --               return
+  --             end
+  --             if depth == start_depth then
+  --               vim.api.nvim_win_set_cursor(0, { line, 0 })
+  --               local node = api.tree.get_node_under_cursor()
+  --               if node and node.type == 'directory' then
+  --                 return
+  --               end
+  --             end
+  --             ::continue::
+  --           end
+  --         end
+  --
+  --         vim.keymap.set('n', '<CR>', open_vsplit, opts('Open: Vertical Split'))
+  --         vim.keymap.set('n', 'o', open_vsplit, opts('Open: Vertical Split'))
+  --         vim.keymap.set('n', ']d', function() jump_to_same_level_directory(1) end, opts('Jump to next directory at same level'))
+  --         vim.keymap.set('n', '[d', function() jump_to_same_level_directory(-1) end, opts('Jump to previous directory at same level'))
+  --       end,
+  --     })
+  --   end,
+}

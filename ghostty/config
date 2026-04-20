@@ -1,0 +1,23 @@
+### Jhayes' configs for Ghostty
+
+# startup
+window-save-state = never
+window-inherit-working-directory = false
+working-directory = home
+
+## ghosty keybinds
+
+# create new split (Neovim)
+keybind = cmd+shift+l=new_split:right
+
+# create new split below (shell)
+keybind = cmd+shift+j=new_split:down
+
+# Navigate between panes (vim-style)
+keybind = cmd+h=goto_split:left
+keybind = cmd+j=goto_split:bottom
+keybind = cmd+k=goto_split:top
+keybind = cmd+l=goto_split:right
+
+# font size
+font-size = 12
