@@ -1,4 +1,6 @@
 # dotfiles
 
 These dotfiles contain some personal configs. 
-# dotfiles
+# symlink order
+ln -s /real/path /linked/path
+
